@@ -4,3 +4,5 @@
 In order to edit this README, I first logged into Github and clicked on the button for my profile.  In my respositories, I chose BIOL-653-Roy-Michael, and then clicked on the pencil icon to edit this README.  And here I am!
 
 I am *now* editing this README in RStudio, that I hope will successgfully be pushed to my Gitbub account.  **Here it goes!**
+
+It all actually worked!  Now to submit it as my homework. 
