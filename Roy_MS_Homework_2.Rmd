@@ -71,7 +71,7 @@ ggplot(data = gapminder, aes(x = lifeExp, fill = continent)) +
 ####Part III####
 #####I have no idea about this one :(
 
-
+#####However, I did successfully figure out git and Rmarkdown!
 
 
 
