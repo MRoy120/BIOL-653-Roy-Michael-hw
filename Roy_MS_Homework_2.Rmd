@@ -1,0 +1,94 @@
+library(ggplot2)
+library(gapminder)
+data("gapminder")
+install.packages("quantreg")
+library(quantreg)
+library(dplyr)
+
+####Part I####
+####Question 1####
+ggplot(data = gapminder, aes(x = gdpPercap, y = lifeExp, colour = continent, shape = continent)) + 
+  geom_point()
+
+####Question 2####
+ggplot(data = gapminder, aes(x = gdpPercap, y = lifeExp, colour = continent, shape = continent)) + 
+  geom_point() +
+  scale_x_log10() +
+  dev.new()
+
+#####Question 3####
+y <- "lifeExp"
+x <- "gdpPercap"
+
+m <- lm(gdpPercap ~ lifeExp, data = gapminder)
+
+ggplot(data = gapminder, aes(x = gdpPercap, y = lifeExp, colour = continent)) + 
+  geom_point() +
+  scale_x_log10() +
+  lm(gdpPercap ~ lifeExp, data = gapminder)
+  
+ggplot(data = gapminder, aes(x = gdpPercap, y = lifeExp)) + 
+  geom_point() +
+  scale_x_log10() +
+  geom_quantile(lifeExp ~ gdpPercap)
+
+ggplot(data = gapminder, aes(x = gdpPercap, y = lifeExp)) + 
+  geom_point() +
+  scale_x_log10() +
+  stat_smooth()
+  
+####Question 4####
+#What am I coding?
+#density of Life expectancy for each continent every five years from 1952 to 2007
+
+#ggplot(data = gapminder, aes(x = lifeExp, by = continent, colour = continent)) +
+  #geom_density() +
+  #facet_wrap(lifeExp ~ continent) +
+  #dev.new()
+                            
+#(ggplot(data = gapminder, aes(x = gdpPercap, y = geom_density("lifeExp"), colour = continent)) +
+  #geom_point()
+                            
+
+ggplot(data = gapminder, aes(x = lifeExp, colour = continent)) + 
+  geom_density() +
+  facet_wrap(~ year) 
+
+
+####Part II####
+####Question 6####
+ggplot(data = gapminder, aes(x = lifeExp, by = continent, colour = continent)) +
+  geom_density() +
+  dev.nev()
+  
+####Question 7####
+ggplot(data = gapminder, aes(x = lifeExp, colour = country, limit_by = "Asia")) +
+  geom_density()
+
+####Question 8a####
+
+mean_df <- 
+  gapminder %>%
+  group_by(continent) %>%  
+  summarize(mean_le = mean(lifeExp))
+
+#I know you reviewed this in class, but now I can't remember 
+#(and apparently I didn't copy it down) how to write the mean line for 8b
+
+####Question 8b####
+
+ggplot(data = gapminder, aes(x = lifeExp, fill = continent)) + 
+  geom_density() +
+  geom_vline(data = mean_df, aes(xintercept = "mean_le")) +
+  facet_wrap(~ continent)
+  
+
+
+
+
+
+
+
+
+
+
