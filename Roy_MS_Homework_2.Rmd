@@ -1,15 +1,36 @@
+---
+title: "Homework 2"
+author: "Michael Roy"
+date: "September 29, 2015"
+output: html_document
+---
+
+I've included a header so that when you render the Rmarkdown document in RStudio
+ it knows what kind of document to create, and includes some extra information 
+ about the document.  
+
+
 ####Part I####
 ####Question 1####
+
+```{r}
 ggplot(data = gapminder, aes(x = gdpPercap, y = lifeExp, colour = continent, shape = continent)) + 
   geom_point()
+```
 
 ####Question 2####
+
+```{r}
 ggplot(data = gapminder, aes(x = gdpPercap, y = lifeExp, colour = continent, shape = continent)) + 
   geom_point() +
   scale_x_log10() +
-  dev.new()
+  #dev.new()
+# You might not want to call dev.new() in the final rmarkdown (I'm not sure if 
+# it tries to open )
+```
 
 ####Question 3####
+```{r}
 y <- "lifeExp"
 x <- "gdpPercap"
 
@@ -29,51 +50,132 @@ ggplot(data = gapminder, aes(x = gdpPercap, y = lifeExp)) +
   geom_point() +
   scale_x_log10() +
   stat_smooth()
+
+# JD: So close here! You just need to select the 'method' that the smoothing 
+# statistic should be applied. 
+ggplot(data = gapminder, aes(x = gdpPercap, y = lifeExp)) + 
+  geom_point(aes(colour = continent, shape = continent)) + 
+  scale_x_log10() +
+  stat_smooth(method = 'lm')
+```
   
 ####Question 4####
 ##### My notes: What am I coding?
 ##### density of Life expectancy for each continent every five years from 1952 to 2007
 
+```{r}
 ggplot(data = gapminder, aes(x = lifeExp, fill = continent)) + 
   geom_density(alpha = 0.5) +
   facet_wrap(~ year) 
+```
 
 ####Part II####
 ####Question 6####
+```{r}
 ggplot(data = gapminder, aes(x = lifeExp, by = continent, fill = continent)) +
   geom_density(alpha = 0.5)
-  
+
+```
+
 ####Question 7####
+```{r}
 ggplot(data = gapminder, aes(x = lifeExp, colour = country, limit_by = "Asia")) +
   geom_density()
 
+# JD: You have to give ggplot only the data that you would like to graph. 
+# Because it is a short piece of code, you contain the filtering in ggplot. 
+# You could use the base function subset() or filter() in dplyr.
+
+ggplot(data = subset(gapminder, continent == 'Asia'), aes(x = lifeExp)) + 
+  geom_density()
+
+# or
+
+ggplot(data = filter(gapminder, continent == 'Asia'), aes(x = lifeExp)) + 
+  geom_density()
+
+```
+
 ####Question 8a####
 
+```{r}
 mean_df <- 
   gapminder %>%
   group_by(continent) %>%  
   summarize(mean_le = mean(lifeExp))
+```
 
 #####I know you reviewed this in class, but now I can't remember 
 #####(and apparently I didn't copy it down) how to write the mean line for 8b
 
 ####Question 8b####
 
+```{r}
 ggplot(data = gapminder, aes(x = lifeExp, fill = continent)) + 
   geom_density(alpha = 0.5) +
-  geom_vline(data = mean_df, aes(xintercept = "mean_le")) +
+  geom_vline(data = mean_df, aes(xintercept = mean_le)) +
   facet_wrap(~ continent)
   
+# When you had xintercept = "mean_le" you were getting the error: 
+# Error: Discrete value supplied to continuous scale
+# This is because you told R that you literally want to plot "mean_le" the 
+# 'word', rather than indicating the column name mean_le.
+
 ggplot(data = gapminder, aes(x = lifeExp, fill = continent)) + 
   geom_density(alpha = 0.5) +
   facet_wrap(~ continent)
+```
 
 ####Part III####
 #####I have no idea about this one :(
 
 #####However, I did successfully figure out git and Rmarkdown!
 
+So I think you were originally getting tripped up with reading the hw_gapminder.csv 
+file into R. You can go and try this out.  
 
+Check what your working directory is:
 
+```{r}
+getwd()
+```
+
+Hopefully it will be the homework folder that you created at the beginning of the 
+class. If not you can set it using:
+
+```{r}
+setwd('path to file here')
+```
+
+If that's all setup nicely, then you can just run
+
+```{r}
+hw_gapminder <- read.csv('./hw_gapminder.csv')
+
+# which is equivalent to:
+hw_gapminder <- read.csv('hw_gapminder.csv')
+```
+
+If you had a separate place you kept hw_gapminder.csv, say for example, in a 
+folder where you store all your data for a certain project called hw_data. You 
+can just change the path (the route of folders that you need to traverse to get 
+to where you want to be on your computer -- remember this is relative to where 
+you're starting, i.e., your working directory). Checkout the read.csv() help 
+file for more information.  
+
+Given that, maybe take another stab at trying to find the issues (just for your 
+own interest).
+
+```{r, eval = FALSE}
+
+mean_lifeExp <- mean(hw_gapminder$lifeExpe)
+
+small_set <- hw_gapminder[c(1, 2, 3, 4, 1300:1304), ('country', 'continent', 'year')]
+
+mean_gdp <- mean(hw_gapminder$gdpPercap)
+
+max_country <- hw_gapminder$country[which(hw_gapminder$lifeExp = max(hw_gapminder$lifeExp))]
+
+```
 
 
