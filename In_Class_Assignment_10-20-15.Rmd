@@ -5,10 +5,9 @@ date: "October 20, 2015"
 output: html_document
 ---
 
-##Question 1 
-###Print each value of this matrix
+###Question 1: Print each value of this matrix
 
-####The following is false, and was an attempt for me to work out the problem
+####The following is false, and was an attempt for me to work out the problem:
 
 ```{r}
 mat <- matrix(100:200, nrow = 10, ncol = 10)
@@ -19,7 +18,7 @@ for(i in 1:100) {
 }
 ```
 
-####This is the correct answer, below
+####This is the correct answer, below:
 
 ```{r}
 mat <- matrix(100:200, nrow = 10, ncol = 10)
@@ -31,14 +30,12 @@ for (c in 1:10) {
 }
 ```
 
-##Question 2
+###Question 2
 
 
-##Question 3a
-###Print these values as part of a string that looks something like 'n = 16'
-###Try to describe in words how creating the vector of numbers that you are going to use
+###Question 3a: Print these values as part of a string that looks something like 'n = 16'.  Try to describe in words how creating the vector of numbers that you are going to use
 
-####This is the correct answer below
+####This is the correct answer below:
 
 ```{r}
 set.seed(1)
@@ -50,7 +47,7 @@ for (i in 1:15) {
 }
 ```
 
-####The following was what Lucy taught me about visualizing my loops
+####The following was what Lucy taught me about visualizing my loops:
 
 ```{r}
 set.seed(1)
@@ -65,8 +62,8 @@ x <- round(runif(min = 10, max = 100, n = 15))
   }
 ```
 
-##Personal Notes
-###NOTE:
+###Personal Notes
+####NOTE:
 ####[Square Brackets are used for indexing]
 ####(paratheses are used for functions and order of operations)
 ####For Loops Takes the element of that vector at each step
